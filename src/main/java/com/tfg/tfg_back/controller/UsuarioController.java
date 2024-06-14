@@ -5,10 +5,13 @@ import com.tfg.tfg_back.model.Usuario;
 import com.tfg.tfg_back.model.UsuarioRol;
 import com.tfg.tfg_back.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -47,5 +50,10 @@ public class UsuarioController {
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
         usuarioService.eliminarUsuario(usuarioId);
+    }
+    @GetMapping
+    public ResponseEntity<List<Usuario>> obtenerUsuarios() {
+        List<Usuario> usuarios = usuarioService.findAll();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 }

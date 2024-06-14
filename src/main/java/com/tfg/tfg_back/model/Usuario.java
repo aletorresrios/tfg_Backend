@@ -107,7 +107,7 @@ public class Usuario implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
         this.usuarioRoles = usuarioRoles;
     }
