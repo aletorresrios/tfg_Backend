@@ -20,7 +20,7 @@ public class Usuario implements UserDetails {
     private String nombre;
     private String email;
     @OneToMany (cascade = CascadeType.ALL,fetch =FetchType.EAGER, mappedBy = "usuario")
-    @JsonIgnore
+
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
     public Usuario() {

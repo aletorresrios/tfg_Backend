@@ -42,10 +42,10 @@ public class UsuarioController {
         usuarioRoles.add(usuarioRol);
         return usuarioService.guardarUsuario(usuario, usuarioRoles);
     }
-    @GetMapping("/{username}")
-    public Usuario obtenerUsuario(@PathVariable("username") String username){
+    /*@GetMapping("/{username}")
+    public Usuario obtenerUsuarioUsername(@PathVariable("username") String username){
         return usuarioService.obtenerUsuario(username);
-    }
+    }*/
 
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
@@ -56,4 +56,35 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.findAll();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id);
+        System.out.println(usuario.getUsername());
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) throws Exception {
+        Usuario usuarioActualizado = usuarioService.actualizarUsuario(id, usuario);
+        return ResponseEntity.ok(usuarioActualizado);
+    }
+    @PostMapping("/admin")
+    public Usuario guardarAdmin (@RequestBody Usuario usuario) throws Exception{
+
+        usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+
+        Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+        Rol rol = new Rol ();
+        rol.setRolId(1L);
+        rol.setNombre("ADMIN");
+
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setRol(rol);
+        usuarioRol.setUsuario(usuario);
+
+        usuarioRoles.add(usuarioRol);
+        return usuarioService.guardarUsuario(usuario, usuarioRoles);
+    }
+
 }

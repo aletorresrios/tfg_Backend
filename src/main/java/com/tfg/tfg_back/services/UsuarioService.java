@@ -16,4 +16,9 @@ public interface UsuarioService {
 
     public List<Usuario> findAll();
 
+    public  Usuario save(Usuario usuario);
+
+    public Usuario findById(Long id);
+
+    public Usuario actualizarUsuario(Long id, Usuario usuario) throws Exception;
 }
